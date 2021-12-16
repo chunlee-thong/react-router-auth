@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Link, Redirect, Route, RouteProps, Switch } from "react-router-dom";
+import { BrowserRouter, Link, Navigate, Route, RouteProps, Routes } from "react-router-dom";
 import DashboardPage from "./pages/dashboard.page";
 import HomePage from "./pages/home.page";
 import LoginPage from "./pages/login.page";
@@ -12,14 +12,12 @@ export interface CustomRoute extends RouteProps {
 
 export const authRoute: Array<CustomRoute> = [
   {
-    exact: true,
-    component: DashboardPage,
+    element: <DashboardPage/>,
     path: "/dashboard",
     name: "Dashboard",
   },
   {
-    exact: true,
-    component: HomePage,
+    element: <HomePage/>,
     path: "/",
     name: "Home",
   },
@@ -27,14 +25,13 @@ export const authRoute: Array<CustomRoute> = [
 
 export const notAuthRoute: Array<CustomRoute> = [
   {
-    exact: true,
-    component: LoginPage,
+
+    element: <LoginPage/>,
     path: "/login",
     name: "Login",
   },
   {
-    exact: true,
-    component: RegisterPage,
+    element:<RegisterPage/>,
     path: "/register",
     name: "Register",
   },
@@ -46,6 +43,8 @@ function App() {
   useEffect(() => {
     setLogin();
   }, [setLogin]);
+
+  console.log(auth);
 
   return (
     <div>
@@ -59,12 +58,13 @@ function App() {
                 </li>
               ))}
             </ul>
-            <Switch>
+            <Routes>
               {authRoute.map((route) => {
                 return <Route {...route} />;
               })}
-              <Redirect to="/" />
-            </Switch>
+              
+              <Route path="*" element={<Navigate replace to={'/'}/>}></Route>
+            </Routes>
           </div>
         ) : (
           <div>
@@ -75,12 +75,12 @@ function App() {
                 </li>
               ))}
             </ul>
-            <Switch>
+            <Routes>
               {notAuthRoute.map((route) => {
                 return <Route {...route} />;
               })}
-              <Redirect to="/login" />
-            </Switch>
+              <Route path="*" element={<Navigate replace to={'/login'}/>}></Route>
+            </Routes>
           </div>
         )}
       </BrowserRouter>
