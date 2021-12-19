@@ -22,7 +22,7 @@ jobs:
       - name: Build The App
         run: yarn build
       - name: Show some ENV
-      - run: echo ${{github.ref}}
+        run: echo ${{github.ref}}
       - name: Copy build folder into our server
         uses: appleboy/scp-action@master
         with:
