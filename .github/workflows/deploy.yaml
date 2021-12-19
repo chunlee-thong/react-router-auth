@@ -1,7 +1,7 @@
 name: Deploy React App
 on:
   push:
-    tag: ["v*"]
+    tags: ["v*"]
 jobs:
   build:
     name: Build React app
