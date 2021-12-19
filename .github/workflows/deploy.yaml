@@ -1,8 +1,7 @@
-name: Deploy Gogym Server dev
+name: Deploy React App
 on:
   push:
-    tag:
-      - "v*"
+    tags: ['v*']
 jobs:
   build:
     name: Build React app
