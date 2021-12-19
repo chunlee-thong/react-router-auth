@@ -1,7 +1,6 @@
 APP=$1
 CONFIG_FILE=react-router-auth.conf
 PORT=3000
-APP_NAME=$APP-$PORT
 ##
 cp -n scripts/$CONFIG_FILE /etc/nginx/sites-available
 ln -s /etc/nginx/sites-available/$CONFIG_FILE /etc/nginx/sites-enabled
@@ -18,11 +17,11 @@ mkdir ~/projects/apps/$APP
 cp -R ~/react-build-temp/$APP/build ~/projects/apps/$APP
 
 cd ~/projects/apps/$APP
-pm2 describe $APP_NAME > /dev/null
+pm2 describe $APP > /dev/null
 RUNNING=$?
 if [ "${RUNNING}" -ne 0 ]; then
-  pm2 serve build $PORT --spa --name $APP_NAME
+  pm2 serve build $PORT --spa --name $APP
 else
-  pm2 reload $APP_NAME
+  pm2 reload $APP
 fi;
 pm2 save

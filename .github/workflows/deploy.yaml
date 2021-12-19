@@ -34,20 +34,20 @@ jobs:
           source: build
           target: ~/react-build-temp/${{ env.APP }}
 
-      # - name: Clone the repo into server and copy build folder
-      #   uses: appleboy/ssh-action@master
-      #   with:
-      #     host: ${{ secrets.HOST }}
-      #     username: ${{ secrets.USERNAME }}
-      #     key: ${{ secrets.KEY }}
-      #     port: ${{ secrets.PORT }}
-      #     passphrase: ${{secrets.PASSPHRASE}}
-      #     script: |
-      #       cd ~
-      #       cd projects
-      #       rm -rf ${{ github.event.repository.name }}
-      #       git clone git@github.com:${{ github.event.repository.full_name }}.git
-      #       cd ${{ github.event.repository.name }}
-      #       git checkout dev
-      #       git pull
-      #       sh scripts/deploy.sh
+      - name: Clone the repo into server and copy build folder
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.KEY }}
+          port: ${{ secrets.PORT }}
+          passphrase: ${{secrets.PASSPHRASE}}
+          script: |
+            cd ~
+            cd projects
+            rm -rf ${{ github.event.repository.name }}
+            git clone git@github.com:${{ github.event.repository.full_name }}.git
+            cd ${{ github.event.repository.name }}
+            git checkout master
+            git pull
+            sh scripts/deploy.sh ${{env.APP}}
