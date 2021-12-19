@@ -1,9 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { BrowserRouter, Link, Navigate, Route, RouteProps, Routes } from "react-router-dom";
 import DashboardPage from "./pages/dashboard.page";
 import HomePage from "./pages/home.page";
 import LoginPage from "./pages/login.page";
 import RegisterPage from "./pages/register.page";
+import SettingPage from "./pages/setting.page";
 import { useAuth } from "./state/auth.state";
 
 export interface CustomRoute extends RouteProps {
@@ -12,38 +13,37 @@ export interface CustomRoute extends RouteProps {
 
 export const authRoute: Array<CustomRoute> = [
   {
-    element: <DashboardPage/>,
+    element: <DashboardPage />,
     path: "/dashboard",
     name: "Dashboard",
   },
   {
-    element: <HomePage/>,
-    path: "/",
+    element: <SettingPage />,
+    path: "/setting",
+    name: "Setting",
+  },
+  {
+    element: <HomePage />,
+    path: "/home",
     name: "Home",
   },
 ];
 
 export const notAuthRoute: Array<CustomRoute> = [
   {
-
-    element: <LoginPage/>,
+    element: <LoginPage />,
     path: "/login",
     name: "Login",
   },
   {
-    element:<RegisterPage/>,
+    element: <RegisterPage />,
     path: "/register",
     name: "Register",
   },
 ];
 
-function App() {
-  const { isLoggedIn: auth, setLogin } = useAuth();
-
-  useEffect(() => {
-    setLogin();
-  }, [setLogin]);
-
+export const App = () => {
+  const { isLoggedIn: auth } = useAuth();
   console.log(auth);
 
   return (
@@ -53,7 +53,7 @@ function App() {
           <div>
             <ul>
               {authRoute.map((route) => (
-                <li>
+                <li id={route.path}>
                   <Link to={`${route.path}`}>{route.name}</Link>
                 </li>
               ))}
@@ -62,15 +62,14 @@ function App() {
               {authRoute.map((route) => {
                 return <Route {...route} />;
               })}
-              
-              <Route path="*" element={<Navigate replace to={'/'}/>}></Route>
+              <Route path="*" element={<Navigate replace to={"/home"} />}></Route>
             </Routes>
           </div>
         ) : (
           <div>
             <ul>
               {notAuthRoute.map((route) => (
-                <li>
+                <li id={route.path}>
                   <Link to={`${route.path}`}>{route.name}</Link>
                 </li>
               ))}
@@ -79,13 +78,11 @@ function App() {
               {notAuthRoute.map((route) => {
                 return <Route {...route} />;
               })}
-              <Route path="*" element={<Navigate replace to={'/login'}/>}></Route>
+              <Route path="*" element={<Navigate replace to={"/login"} />}></Route>
             </Routes>
           </div>
         )}
       </BrowserRouter>
     </div>
   );
-}
-
-export default App;
+};

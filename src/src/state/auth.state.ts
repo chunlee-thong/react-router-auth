@@ -9,7 +9,7 @@ export interface AuthState {
 
 // And it is going to work for both
 export const useAuth = create<AuthState>((set) => ({
-  isLoggedIn: false,
+  isLoggedIn: localStorage.getItem("token") != null,
   setLogin: () => {
     const token = localStorage.getItem("token");
     set({ isLoggedIn: token != null });
