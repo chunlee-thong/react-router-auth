@@ -9,16 +9,16 @@ nginx -t
 sudo service nginx restart
 
 #delete old serve folder
-rm -rf ~/projects/apps/$APP_NAME
+rm -rf ~/apps/$APP_NAME
 
 #create new serve folder
-mkdir ~/projects/apps/$APP_NAME
+mkdir ~/apps/$APP_NAME
 
 #Copy new build from temp folder
-cp -R ~/react-build-temp/$APP_FULL_NAME/build ~/projects/apps/$APP_NAME
+cp -R ~/react-build-temp/$APP_FULL_NAME/build ~/apps/$APP_NAME
 
 ##
-cd ~/projects/apps/$APP_NAME
+cd ~/apps/$APP_NAME
 
 pm2 describe $APP_NAME > /dev/null
 RUNNING=$?
