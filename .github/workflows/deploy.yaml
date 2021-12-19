@@ -1,8 +1,7 @@
 name: Deploy React App
 on:
   push:
-    branches:
-      - master
+    tag: ["v*"]
 jobs:
   build:
     name: Build React app
@@ -33,7 +32,7 @@ jobs:
           port: ${{ secrets.PORT }}
           passphrase: ${{secrets.PASSPHRASE}}
           source: build
-          target: ~/react-build-temp/{{ env.APP }}
+          target: ~/react-build-temp/${{ env.APP }}
 
       # - name: Clone the repo into server and copy build folder
       #   uses: appleboy/ssh-action@master
