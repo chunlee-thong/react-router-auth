@@ -11,9 +11,9 @@ jobs:
       NODE_OPTIONS: "--max_old_space_size=4096"
     steps:
       - uses: actions/checkout@v2
-      - name: Set output
-        id: vars
-        run: echo ::set-output name=app::${github.event.repository.name}-${GITHUB_REF#refs/*/}
+      - name: Set ENV
+        run: |
+          echo "APP=${github.event.repository.name}${GITHUB_REF#refs/*/}" >> $GITHUB_ENV
       - name: Setup Node JS
         uses: actions/setup-node@v1
         with:
@@ -33,7 +33,7 @@ jobs:
           port: ${{ secrets.PORT }}
           passphrase: ${{secrets.PASSPHRASE}}
           source: build
-          target: ~/react-build-temp/{{ steps.vars.outputs.app }}
+          target: ~/react-build-temp/{{ env.APP }}
 
       # - name: Clone the repo into server and copy build folder
       #   uses: appleboy/ssh-action@master
