@@ -33,7 +33,7 @@ jobs:
           port: ${{ secrets.PORT }}
           passphrase: ${{secrets.PASSPHRASE}}
           source: build
-          target: ~/react-build-temp/${{app}}
+          target: ~/react-build-temp/{{ steps.vars.outputs.app }}
 
       # - name: Clone the repo into server and copy build folder
       #   uses: appleboy/ssh-action@master
